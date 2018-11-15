@@ -1,6 +1,6 @@
 {
   "name": "cisco-tp-snapshots",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Take Snapshots from Telepresence Endpoints",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
