@@ -1,29 +1,51 @@
-# Example Typescript 2.x Library
+# Cisco Telepresence Endpoint Snapshots API
 
-Simple starter library from June 2017.
-Tutorial can be found at
-[how-to-write-a-typescript-library.com](http://how-to-write-a-typescript-library.com).
+Take snapshots from your Cisco Teleprsence endpoint when Remote Monitoring Option is installed.
 
-Or just browse the code here! Or clone the repo.
-
-# Usage
+### Install
 
 ```
-git clone https://github.com/bersling/typescript-library-starter.git
+npm i cisco-tp-snapshots
 ```
 
-then modify whatever you want, then
+### Usage
+
+```javascript
+// If using Self-Signed CERT on Endpoints do this...
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+const { TpEndpoint } = require('cisco-tp-snapshots');
+
+const ce = new TpEndpoint({
+  host: 'ip/hostname',
+  username: 'user',
+  password: 'pass'
+});
+
+// Verify Endpoint has the Feature
+ce.verifyTpEndpoint().then(enabled => {
+  if(enabled) {
+    return ce.getVideoInputs().then(inputs => {
+      // [{sourceId: '1', type: 'inputType <camera|hdmi|etc>'}]
+      return ce.takeSnapshot(inputs[0].sourceId).then(img => {
+        // What to do with the Image ?
+        fs.writeFile('./myimg.jpeg', img, {encoding: 'base64'}, (e) => {})
+      })
+    })
+  }
+})
+```
+### Contributing
+
+This module is written using Typescript. Clone this Module to submit PRs or continue development as your own repository.
 
 ```
-tsc
+npm install
+# To Build for PROD
+npm run build
+# Development (watches all ts files in the src directory and builds on change
+npm run dev
 ```
 
-You can check if everything is working like this:
-http://how-to-write-a-typescript-library.com/local-consumer
-
-You can write a test like this:
-http://how-to-write-a-typescript-library.com/unit-testing
-
-And once you're ready, simply change the `name` in the `package.json`
-and publish your brand new cool library. Have fun!
-
+### License
+MIT
