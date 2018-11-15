@@ -15,6 +15,8 @@ npm i cisco-tp-snapshots
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const { TpEndpoint } = require('cisco-tp-snapshots');
+// If saving to local file system
+const fs = require('fs');
 
 const ce = new TpEndpoint({
   host: 'ip/hostname',
@@ -30,6 +32,9 @@ ce.verifyTpEndpoint().then(enabled => {
       return ce.takeSnapshot(inputs[0].sourceId).then(img => {
         // What to do with the Image ?
         fs.writeFile('./myimg.jpeg', img, {encoding: 'base64'}, (e) => {})
+        // If you want to Add it to an HTML <img>
+        // img = 'data:image/jpeg;base64,' + img
+        // <img src=img />
       })
     })
   }
