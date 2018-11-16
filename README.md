@@ -1,3 +1,5 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/drkchiloll/cisco-tp-snapshots)
+
 # Cisco Telepresence Endpoint Snapshots API
 
 Take snapshots from your Cisco Teleprsence endpoint when Remote Monitoring Option is installed.
