@@ -64,7 +64,7 @@ export class TpEndpoint {
   }
 
   takeSnapshot(SourceId) {
-    const url = '/api/snapshot/get_b64';
+    const url = '/websnapshot/get_b64';
       return this.wakeupTpEndpoint().then(() => {
           return this.apiRequest.get(url, {
               auth: this.ceConfig,
