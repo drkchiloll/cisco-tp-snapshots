@@ -64,30 +64,12 @@ export class TpEndpoint {
   }
 
   takeSnapshot(SourceId) {
-    const url = '/web/api/snapshot/get_b64';
-    return this.wakeupTpEndpoint().then(() => {
-      return this.apiRequest.get('/web/signin').then(resp => {
-        return this.apiRequest.post('/xmlapi/session/begin')
-          .then(resp => {
-            const cook1 = resp.headers['set-cookie'][0];
-            const re1 = /SecureSessionId=\w+/;
-            const cookie1 = cook1.match(re1)[0];
-            this.apiRequest.defaults.headers['Cookie'] = cookie1;
-            return this.apiRequest.get('web').then(resp => {
-              const cook2 = resp.headers['set-cookie'][0],
-                re2 = /SecureClientId=\w+\;/,
-                cookie2 = cook2.match(re2)[0],
-                cookie3 = cookie2 + ' ' + cookie1;
-              let re = /\"csrfToken\":\"(\w+)\"/;
-              this.apiRequest.defaults.headers['Cookie'] = cookie3;
-              this.apiRequest.defaults.headers['X-CSRFToken'] = resp.data.match(re)[1];
-              return;
-            })
-          });
-        })
-      }).then(() => this.apiRequest.get(url, {
-        params: { SourceType: 'localInput', SourceId }
-      })).then(resp => resp.data.data);
+    const url = '/websnapshot/get_b64';
+      return this.wakeupTpEndpoint().then(() => {
+          return this.apiRequest.get(url, {
+              auth: this.ceConfig,
+              params: { SourceType: 'localInput', SourceId }});
+      }).then(resp => resp.data.data);
   }
 
 }
