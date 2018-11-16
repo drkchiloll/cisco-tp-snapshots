@@ -65,11 +65,8 @@ export class TpEndpoint {
 
   takeSnapshot(SourceId) {
     const url = '/websnapshot/get_b64';
-      return this.wakeupTpEndpoint().then(() => {
-          return this.apiRequest.get(url, {
-              auth: this.ceConfig,
-              params: { SourceType: 'localInput', SourceId }});
-      }).then(resp => resp.data.data);
+    return this.wakeupTpEndpoint().then(() => this.apiRequest.get(url, {
+      params: { SourceType: 'localInput', SourceId }
+    })).then(resp => resp.data.data);
   }
-
 }
